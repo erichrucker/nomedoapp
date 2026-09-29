@@ -1,6 +1,9 @@
+import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
 
@@ -10,13 +13,17 @@ export default function HomeScreen() {
 
       <View style={styles.card}>
         <Text style={styles.label}>Saldo disponível</Text>
-        <Text style={styles.balance}>R$ 1.000,00. </Text>
+        <Text style={styles.balance}>R$ 1.000,00.</Text>
       </View>
 
       <Text style={styles.title}>Acesso rápido</Text>
 
       <View style={styles.buttons}>
-        <TouchableOpacity style={styles.button}>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => router.push('/telapix')}
+        >
           <Text>💸</Text>
           <Text>Pix</Text>
         </TouchableOpacity>
@@ -30,6 +37,7 @@ export default function HomeScreen() {
           <Text>📈</Text>
           <Text>Investir</Text>
         </TouchableOpacity>
+
       </View>
 
       <Text style={styles.title}>Últimas movimentações</Text>
