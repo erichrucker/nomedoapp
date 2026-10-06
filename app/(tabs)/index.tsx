@@ -13,7 +13,7 @@ export default function HomeScreen() {
 
       <View style={styles.card}>
         <Text style={styles.label}>Saldo disponível</Text>
-        <Text style={styles.balance}>R$ 1.000,00.</Text>
+        <Text style={styles.balance}>R$ 1.000,00</Text>
       </View>
 
       <Text style={styles.title}>Acesso rápido</Text>
@@ -22,19 +22,24 @@ export default function HomeScreen() {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => router.push('/telapix')}
+          onPress={() =>
+            router.push({
+              pathname: '/telapix',
+              params: { operacao: 'Enviar Pix' }
+            })
+          }
         >
-          <Text>💸</Text>
+          <Text style={styles.icon}>💸</Text>
           <Text>Pix</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
-          <Text>💳</Text>
+          <Text style={styles.icon}>💳</Text>
           <Text>Cartão</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}>
-          <Text>📈</Text>
+          <Text style={styles.icon}>📈</Text>
           <Text>Investir</Text>
         </TouchableOpacity>
 
@@ -113,6 +118,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '30%',
     gap: 8,
+  },
+
+  icon: {
+    fontSize: 25,
   },
 
   transaction: {

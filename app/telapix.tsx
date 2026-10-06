@@ -1,8 +1,10 @@
-import { useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function TelaPix() {
   const router = useRouter();
+
+  const { operacao } = useLocalSearchParams();
 
   return (
     <View style={styles.container}>
@@ -14,30 +16,39 @@ export default function TelaPix() {
       <Text style={styles.title}>Pix</Text>
 
       <Text style={styles.subtitle}>
-        O que você deseja fazer?
+        Operação selecionada: {operacao}
       </Text>
 
       <TouchableOpacity style={styles.option}>
         <Text style={styles.icon}>📷</Text>
+
         <View>
           <Text style={styles.optionTitle}>Ler QR Code</Text>
-          <Text style={styles.optionText}>Escaneie um QR Code Pix</Text>
+          <Text style={styles.optionText}>
+            Escaneie um QR Code Pix
+          </Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.option}>
         <Text style={styles.icon}>📋</Text>
+
         <View>
           <Text style={styles.optionTitle}>Pix Copia e Cola</Text>
-          <Text style={styles.optionText}>Cole um código Pix</Text>
+          <Text style={styles.optionText}>
+            Cole um código Pix
+          </Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.option}>
         <Text style={styles.icon}>💸</Text>
+
         <View>
           <Text style={styles.optionTitle}>Enviar Pix</Text>
-          <Text style={styles.optionText}>Envie dinheiro para alguém</Text>
+          <Text style={styles.optionText}>
+            Envie dinheiro para alguém
+          </Text>
         </View>
       </TouchableOpacity>
 
