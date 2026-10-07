@@ -1,8 +1,42 @@
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function HomeScreen() {
   const router = useRouter();
+  const [cep, setCep] = useState("");
+  const [endereco, setEndereco] = useState<any>(null);
+  const [erro, setErro] = useState("");
+  const [carregando, setCarregando] = useState(false);
+
+  async function buscarCep() {
+    setErro("");
+    setEndereco(null);
+
+    if (cep.length !== 8) {
+      setErro("Digite um CEP com 8 números.");
+      return;
+    }
+
+    setCarregando(true);
+
+    try {
+      const resposta = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+
+      const dados = await resposta.json();
+
+      if (dados.erro) {
+        setErro("CEP não encontrado.");
+        return;
+      }
+
+      setEndereco(dados);
+    } catch (erro) {
+      setErro("Não foi possível consultar o CEP.");
+    } finally {
+      setCarregando(false);
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -45,6 +79,37 @@ export default function HomeScreen() {
 
       </View>
 
+ <Text style={styles.title}>📍 Buscar endereço</Text>
+
+    <Text>Digite um CEP para consultar o endereço:</Text>
+
+    <TextInput
+      placeholder="Ex: 93510000"
+      keyboardType="numeric"
+      value={cep}
+      onChangeText={setCep}
+      maxLength={8}
+    />
+
+    <Button
+      title={carregando ? "Buscando..." : "Buscar CEP"}
+      onPress={buscarCep}
+      disabled={carregando}
+    />
+
+    {erro !== "" && <Text>❌ {erro}</Text>}
+
+    {endereco && (
+      <View>
+        <Text>📌 Endereço encontrado</Text>
+
+        <Text>CEP: {endereco.cep}</Text>
+        <Text>Rua: {endereco.logradouro}</Text>
+        <Text>Bairro: {endereco.bairro}</Text>
+        <Text>Cidade: {endereco.localidade}</Text>
+        <Text>Estado: {endereco.uf}</Text>
+      </View>
+    )}
       <Text style={styles.title}>Últimas movimentações</Text>
 
       <View style={styles.transaction}>
@@ -137,3 +202,13 @@ const styles = StyleSheet.create({
     color: 'green',
   },
 });
+
+  function setEndereco(arg0: null) {
+    throw new Error('Function not implemented.');
+  }
+
+
+  function setCarregando(arg0: boolean) {
+    throw new Error('Function not implemented.');
+  }
+
